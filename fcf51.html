@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Face Reading Pro Fixed</title>
+<style>
+body {
+    margin:0;
+    background:#111;
+    font-family:Arial,sans-serif;
+    color:#eee;
+    display:flex;
+    height:100vh;
+}
+
+.container {
+    display:flex;
+    width:100%;
+    height:100%;
+}
+
+/* Left Panel */
+.left-panel {
+    width:40%;
+    background:#181818;
+    padding:20px;l
+    overflow-y:auto;
+}
+
+.left-panel h2 { color:#4da3ff; }
+
+label { display:block; margin-top:15px; font-weight:bold; }
+
+select {
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    border:none;
+    border-radius:6px;
+    background:#222;
+    color:#eee;
+}
+
+button {
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:none;
+    border-radius:6px;
+    background:#4da3ff;
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover { background:#1d8aff; }
+
+/* Right Panel */
+.right-panel {
+    width:60%;
+    background:#0d0d0d;
+    padding:20px;
+    overflow-y:auto;
+}
+
+.result-box {
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:12px;
+    border-left:5px solid #4da3ff;
+}
+
+h3 { color:#4da3ff; }
+
+/* Mobile responsive */
+@media(max-width:900px) {
+    .container { flex-direction:column; }
+    .left-panel, .right-panel { width:100%; height:auto; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <h2>Face Reading Input</h2>
+        <label>Face Shape</label>
+        <select id="faceShape">
+            <option value="round">Round</option>
+            <option value="oval">Oval</option>
+            <option value="square">Square</option>
+            <option value="triangle">Triangle</option>
+            <option value="diamond">Diamond</option>
+        </select>
+
+        <label>Eyebrows</label>
+        <select id="eyebrows">
+            <option value="straight">Straight</option>
+            <option value="arched">Arched</option>
+            <option value="thick">Thick</option>
+            <option value="thin">Thin</option>
+        </select>
+
+        <label>Nose</label>
+        <select id="nose">
+            <option value="big">Big</option>
+            <option value="small">Small</option>
+            <option value="pointed">Pointed</option>
+            <option value="flat">Flat</option>
+            <option value="roundTip">Round Tip</option>
+        </select>
+
+        <label>Moles</label>
+        <select id="moles">
+            <option value="none">None</option>
+            <option value="mouth">Near Mouth</option>
+            <option value="nose">On Nose</option>
+            <option value="forehead">Forehead</option>
+            <option value="eye">Near Eye</option>
+        </select>
+
+        <label>Age Zone</label>
+        <select id="ageZone">
+            <option value="youth">0–30</option>
+            <option value="mid">30–50</option>
+            <option value="late">50+</option>
+        </select>
+
+        <button id="generateBtn">Generate Reading</button>
+    </div>
+
+    <div class="right-panel">
+        <h2>Reading Result</h2>
+        <div id="resultArea" class="result-box">
+            <p>Select features and click "Generate Reading".</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// FIXED: Wait until button is linked correctly
+document.getElementById("generateBtn").addEventListener("click", function() {
+
+    const face = document.getElementById("faceShape").value;
+    const brow = document.getElementById("eyebrows").value;
+    const nose = document.getElementById("nose").value;
+    const mole = document.getElementById("moles").value;
+    const age = document.getElementById("ageZone").value;
+
+    const resultBox = document.getElementById("resultArea");
+
+    // Basic meanings
+    const faceMeaning = {
+        round:"Emotional intelligence, stable wealth.",
+        oval:"Balanced destiny, good relationships.",
+        square:"Leader energy, strong career force.",
+        triangle:"Sharp intuition, creative destiny.",
+        diamond:"Charm, creative, unpredictable fortune."
+    };const browMeaning = {
+        straight:"Logical and loyal.",
+        arched:"Ambitious and fast learner.",
+        thick:"Energetic, strong personality.",
+        thin:"Artistic and sensitive."
+    };
+    const noseMeaning = {
+        big:"Strong wealth luck.",
+        small:"Clever with money but save carefully.",
+        pointed:"Fast opportunities.",
+        flat:"Humble and hardworking.",
+        roundTip:"Good wealth luck and generosity."
+    };
+    const moleMeaning = {
+        none:"Clear destiny.",
+        mouth:"Luck via communication.",
+        nose:"Money luck fluctuates.",
+        forehead:"Ancestral blessing.",
+        eye:"Romantic loyalty challenges."
+    };
+    const ageMeaning = {
+        youth:"Early life shapes future success.",
+        mid:"Mid-life transformations affect fortune.",
+        late:"Later life brings wisdom and stability."
+    };
+
+    const loveMeaning = {
+        round:"Stable and loyal partner.",
+        oval:"Balanced lover, gentle personality.",
+        square:"Reliable, long-term relationship.",
+        triangle:"Romantic, passionate, unpredictable.",
+        diamond:"Attractive and charming."
+    };
+
+    const yearlyLuck = [
+        "Next year: major money opportunity.",
+        "Next year: relationship stability.",
+        "Next year: career breakthrough.",
+        "Next year: avoid conflicts, stay calm.",
+        "Next year: travel and learning luck rises."
+    ];
+
+    const fortuneScore = Math.floor(Math.random()*41)+60; // 60–100
+    const yearlyPrediction = yearlyLuck[Math.floor(Math.random()*yearlyLuck.length)];
+
+    // BUILD RESULT
+    resultBox.innerHTML = `
+        <h3>🔮 Overall Fortune Score: <span style="color:#4da3ff;">${fortuneScore}/100</span></h3>
+        <p><strong>Face Shape:</strong> ${faceMeaning[face]}</p>
+        <p><strong>Eyebrows:</strong> ${browMeaning[brow]}</p>
+        <p><strong>Nose:</strong> ${noseMeaning[nose]}</p>
+        <p><strong>Moles:</strong> ${moleMeaning[mole]}</p>
+        <p><strong>Age Zone:</strong> ${ageMeaning[age]}</p>
+        <h3>❤️ Love Reading</h3>
+        <p>${loveMeaning[face]}</p>
+        <h3>📅 Yearly Prediction</h3>
+        <p>${yearlyPrediction}</p>
+    `;
+});
+</script>
+
+</body>
+</html>
